@@ -1,12 +1,19 @@
 import Vue from 'vue'
 import App from './App.vue'
-/*import router from './router'
-import store from './store'*/
+import router from './router'
+import store from './store'
 
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+
+import IconSvg from './components/Icon-svg'
+Vue.component('icon-svg', IconSvg)
+import './assets/icons/iconfont'
 Vue.config.productionTip = false
+Vue.use(ElementUI)
 
 new Vue({
-  /*router,
-  store,*/
+  router,
+  store,
   render: h => h(App)
 }).$mount('#app')
