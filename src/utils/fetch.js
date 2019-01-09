@@ -8,7 +8,7 @@ class FetchUtil {
     this.headers       = {};
     this.body_type     = 'form';
     this.bodys         = {};
-    this.credentials   = 'omit';
+    this.credentials   = 'include';
     this.return_type   = 'json';
     this.overtime      = 0;
     this.firstThen     = undefined;
@@ -66,7 +66,7 @@ class FetchUtil {
   }
 
   setCookieOrigin(){
-    this.credentials = 'same-origin';
+    this.credentials = 'include';
     return this;
   }
 

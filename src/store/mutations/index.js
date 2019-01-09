@@ -5,4 +5,10 @@ export default {
   changeCollapseStatus(state){
     state.collapsed = !state.collapsed
   },
+  isLoged(state){
+    state.isLogin = !state.isLogin
+  },
+  freshCaptcha(state, imageUrl){
+    state.imageUrl = imageUrl
+  }
 }

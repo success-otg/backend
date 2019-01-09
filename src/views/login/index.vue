@@ -3,26 +3,35 @@
     <h1>饿了么后台管理系统</h1>
     <el-tabs v-model="activeName">
       <el-tab-pane label="用户名登录" name="0">
-        <Username/>
+        <Username :image-url="imageUrl"/>
       </el-tab-pane>
-      <el-tab-pane label="手机登录" name="1">配置管理</el-tab-pane>
-      <el-tab-pane label="邮箱登录" name="2">角色管理</el-tab-pane>
+      <el-tab-pane label="手机登录" name="1">
+        <Phone :image-url="imageUrl"/>
+      </el-tab-pane>
+      <el-tab-pane label="邮箱登录" name="2">
+        <Email :image-url="imageUrl"/>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 
 <script>
   import Username from '../../components/login/Username'
+  import Phone from '../../components/login/Phone'
+  import Email from '../../components/login/Email'
   import {getCaptchas} from "../../api"
 
   export default {
     name: "login",
     components: {
-      Username
+      Username,
+      Phone,
+      Email
     },
     data() {
       return {
-        activeName: '0'
+        activeName: '0',
+        imageUrl: ''
       }
     },
     mounted(){
@@ -30,8 +39,8 @@
     },
     methods:{
       async getCaptchas(){
-        let captcha = await getCaptchas()
-        console.log(captcha)
+        let res = await getCaptchas()
+        this.imageUrl = res.code
       }
     }
   }

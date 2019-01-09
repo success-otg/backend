@@ -15,7 +15,7 @@ const router = new VueRouter({
       component: () => import(/* webpackChunkName:'layout'*/ '../views/layout'),
       children: [
         {
-          path: '/',
+          path: '/home',
           name: '首页',
           component: () => import(/* webpackChunkName:'home'*/ '../views/home')
         },

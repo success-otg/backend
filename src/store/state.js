@@ -4,4 +4,5 @@ export default {
   },
   collapsed: true,
   isLogin: false,
+  imageUrl: ''
 }

@@ -7,8 +7,12 @@
       <el-form-item class="item" prop="password">
         <el-input placeholder="密码" type="password" v-model="ruleForm2.password" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item class="item" prop="captcha">
-        <el-input v-model.number="ruleForm2.captcha"></el-input>
+      <el-form-item class="item captcha" prop="captcha">
+        <el-input placeholder="验证码" v-model.number="ruleForm2.captcha"></el-input>
+        <span>
+        <img :src="imageUrl" alt="img"/>
+        <i class="el-icon-refresh" @click="changeCaptcha"></i>
+          </span>
       </el-form-item>
       <el-form-item class="btns">
         <el-button type="primary" @click="submitForm('ruleForm2')">登录</el-button>
@@ -19,23 +23,19 @@
 </template>
 
 <script>
+  import {login} from "../../api"
+  import {mapState, mapMutations, mapActions} from 'vuex'
+
   export default {
     name: "Username",
     data() {
-      let validateUsername = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入账号'))
-        } else {
-          callback()
-        }
-      }
       let validatePassword = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入密码'));
         } else {
-          if (this.ruleForm2.password !== '') {
+          /*if (this.ruleForm2.password !== '') {
             this.$refs.ruleForm2.validateField('password');
-          }
+          }*/
           callback();
         }
       };
@@ -43,9 +43,7 @@
         if (value === '') {
           callback(new Error('请输入验证码'))
         } else {
-          if (value.length !== 4 || !value.test(/^[0-9]*$/)) {
-            callback(new Error('验证码错误'))
-          }
+          callback()
         }
       }
       return {
@@ -57,7 +55,7 @@
         },
         rules2: {
           user_name: [
-            {validator: validateUsername, trigger: 'blur'}
+            {required: true, trigger: 'blur'}
           ],
           password: [
             {validator: validatePassword, trigger: 'blur'}
@@ -69,13 +67,24 @@
       }
     },
     created() {
-      console.log(this.ruleForm2.captcha.length)
+      this.forFreshCaptcha()
+    },
+    computed:{
+      ...mapState(['isLogin', 'imageUrl'])
     },
     methods: {
-      submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
+      ...mapMutations(['isLoged']),
+      ...mapActions(['forFreshCaptcha']),
+      async submitForm(formName) {
+        this.$refs[formName].validate(async (valid) => {
           if (valid) {
-            alert('submit!');
+            const res = await login(this.ruleForm2)
+            if (res.status === 1){
+              this.isLoged()
+              if (this.isLogin) {
+                this.$router.push('/')
+              }
+            }
           } else {
             console.log('error submit!!');
             return false;
@@ -84,6 +93,9 @@
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
+      },
+      changeCaptcha(){
+        this.forFreshCaptcha()
       }
     }
   }
@@ -97,6 +109,26 @@
         .el-input{
           width: calc(100% - 60px);
           margin: 0 30px;
+        }
+      }
+      .captcha{
+        position: relative;
+        .el-input{
+          width: 45%;
+        }
+        img{
+          position: absolute;
+          right: 50px;
+          width: 25%;
+          height: 40px;
+          vertical-align: middle;
+        }
+        .el-icon-refresh{
+          position: absolute;
+          font-size: 20px;
+          right: 30px;
+          top: 10px;
+          vertical-align: middle;
         }
       }
       .btns{

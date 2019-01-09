@@ -6,7 +6,7 @@
   </el-radio-group>
   <el-menu default-active="/" router class="el-menu-vertical-demo" :collapse="collapseFlag"
            background-color="#324057" text-color="white">
-    <el-menu-item index="/">
+    <el-menu-item index="/home">
       <i class="el-icon-menu"></i>
       <span slot="title">首页</span>
     </el-menu-item>
