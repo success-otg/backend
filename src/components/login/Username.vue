@@ -6,6 +6,8 @@
       </el-form-item>
       <el-form-item class="item" prop="password">
         <el-input placeholder="密码" type="password" v-model="ruleForm2.password" autocomplete="off"></el-input>
+        <span class="levels"><span :style="{color: colors.cl1}">弱  </span><span
+          :style="{color: colors.cl2}">中  </span><span :style="{color: colors.cl3}">强</span></span>
       </el-form-item>
       <el-form-item class="item captcha" prop="captcha">
         <el-input placeholder="验证码" v-model.number="ruleForm2.captcha"></el-input>
@@ -33,10 +35,17 @@
         if (value === '') {
           callback(new Error('请输入密码'));
         } else {
-          /*if (this.ruleForm2.password !== '') {
-            this.$refs.ruleForm2.validateField('password');
-          }*/
-          callback();
+          if (value.length < 6 || value.length > 16) {
+            callback(new Error('请输入6-12位密码'))
+          }
+          if (/^[0-9]{6,16}$|^[a-zA-Z]{6,16}$/.test(value)) {
+            this.colors.cl1 = 'red'
+          } else if (/^[A-Za-z0-9]{6,16}$/.test(value)) {
+            this.colors.cl2 = 'yellow'
+          } else if (/^\w{6,16}$/.test(value)) {
+            this.colors.cl3 = 'green'
+          }
+          callback()
         }
       };
       let validateCaptcha = (rule, value, callback) => {
@@ -53,12 +62,17 @@
           password: '',
           captcha: ''
         },
+        colors: {
+          cl1: '',
+          cl2: '',
+          cl3: ''
+        },
         rules2: {
           user_name: [
             {required: true, trigger: 'blur'}
           ],
           password: [
-            {validator: validatePassword, trigger: 'blur'}
+            {validator: validatePassword, minLength: 6, maxLength: 16, trigger: 'blur'}
           ],
           captcha: [
             {validator: validateCaptcha, trigger: 'blur'}
@@ -69,7 +83,7 @@
     created() {
       this.forFreshCaptcha()
     },
-    computed:{
+    computed: {
       ...mapState(['isLogin', 'imageUrl'])
     },
     methods: {
@@ -79,7 +93,7 @@
         this.$refs[formName].validate(async (valid) => {
           if (valid) {
             const res = await login(this.ruleForm2)
-            if (res.status === 1){
+            if (res.status === 1) {
               this.isLoged()
               if (this.isLogin) {
                 this.$router.push('/')
@@ -94,7 +108,7 @@
       resetForm(formName) {
         this.$refs[formName].resetFields();
       },
-      changeCaptcha(){
+      changeCaptcha() {
         this.forFreshCaptcha()
       }
     }
@@ -106,24 +120,42 @@
     .el-form {
       .item {
         margin-left: -100px;
-        .el-input{
+
+        .el-form-item__error {
+          margin-left: 30px;
+        }
+
+        .el-input {
           width: calc(100% - 60px);
           margin: 0 30px;
         }
+
+        .levels {
+          display: block;
+          width: 100%;
+          font-size: 12px;
+          color: darkgray;
+          margin: -10px 0 -30px;
+          text-align: center;
+        }
       }
-      .captcha{
+
+      .captcha {
         position: relative;
-        .el-input{
+
+        .el-input {
           width: 45%;
         }
-        img{
+
+        img {
           position: absolute;
           right: 50px;
           width: 25%;
           height: 40px;
           vertical-align: middle;
         }
-        .el-icon-refresh{
+
+        .el-icon-refresh {
           position: absolute;
           font-size: 20px;
           right: 30px;
@@ -131,7 +163,8 @@
           vertical-align: middle;
         }
       }
-      .btns{
+
+      .btns {
         margin-left: -100px;
         text-align: center;
       }

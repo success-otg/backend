@@ -1,3 +1,5 @@
+import Storage from '../../utils/storage'
+let localStorage = new Storage()
 export default {
   saveAdminInfo(state, adminInfo){
     state.adminInfo = adminInfo
@@ -10,5 +12,9 @@ export default {
   },
   freshCaptcha(state, imageUrl){
     state.imageUrl = imageUrl
+  },
+  doTiy(state){
+    localStorage.setAge(600).set('a','abc')
+    state.tiy = localStorage.get('a')
   }
 }
