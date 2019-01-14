@@ -20,6 +20,7 @@
   import Phone from '../../components/login/Phone'
   import Email from '../../components/login/Email'
   import {getCaptchas} from "../../api"
+  import {mapState, mapActions} from 'vuex'
 
   export default {
     name: "login",
@@ -34,13 +35,33 @@
         imageUrl: ''
       }
     },
+    created(){
+      if (!this.adminInfo.id){
+        this.getAdminData()
+      }
+    },
     mounted(){
       this.getCaptchas()
     },
+    computed: {
+      ...mapState(['adminInfo'])
+    },
     methods:{
+      ...mapActions(['getAdminData']),
       async getCaptchas(){
         let res = await getCaptchas()
         this.imageUrl = res.code
+      }
+    },
+    watch: {
+      adminInfo: function(newValue){
+        if (newValue.id){
+          this.$message({
+            type: 'success',
+            message: '检测到您之前登录过，将自动登录'
+          })
+          this.$router.push('/manage')
+        }
       }
     }
   }

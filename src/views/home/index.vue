@@ -6,7 +6,6 @@
 </template>
 
 <script>
-  import {mapState, mapMutations} from 'vuex'
   export default {
     name: "home",
     data(){
@@ -15,15 +14,13 @@
       }
     },
     computed:{
-      ...mapState(['tiy'])
     },
     created(){
-      this.doTiy()
+    },
+    mounted(){
     },
     methods:{
-      ...mapMutations(['doTiy']),
       check(){
-        console.log(this.tiy)
       }
     }
   }

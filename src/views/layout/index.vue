@@ -5,7 +5,7 @@
         <menu-list @fromMenu="toggle" :is-collapse="true"></menu-list>
       </el-aside>
       <el-container>
-        <el-header>Header</el-header>
+        <el-header><top/></el-header>
         <el-main>
           <router-view></router-view>
         </el-main>
@@ -16,11 +16,13 @@
 
 <script>
   import menuList from '../../components/layout/menuList'
+  import top from '../../components/layout/top'
   import {mapState} from 'vuex'
   export default {
     name: "layout",
     components:{
-      menuList
+      menuList,
+      top
     },
     data() {
       return {
@@ -28,12 +30,12 @@
       }
     },
     computed: {
-      ...mapState(['collapsed','isLogin'])
+      ...mapState(['collapsed'])
     },
     created() {
-      if (!this.isLogin){
-        this.$router.push('/login')
-      }
+
+    },
+    mounted(){
     },
     methods: {
       toggle(){

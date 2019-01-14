@@ -11,3 +11,7 @@ export const login = (data) => fetch.init().setMethod('POST').setUrl('/admin/log
 }).setBody(data).dofetch()
 
 export const getCode = ()=>fetch.init().setUrl('/v1/captchas').dofetch()
+
+export const getAdminInfo = ()=>fetch.init().setUrl('/admin/info').dofetch()
+
+export const signout = ()=>fetch.init().setUrl('/admin/signout').dofetch()

@@ -83,21 +83,30 @@
     created() {
       this.forFreshCaptcha()
     },
+    mounted() {
+    },
     computed: {
-      ...mapState(['isLogin', 'imageUrl'])
+      ...mapState(['imageUrl'])
     },
     methods: {
-      ...mapMutations(['isLoged']),
+      ...mapMutations([]),
       ...mapActions(['forFreshCaptcha']),
       async submitForm(formName) {
         this.$refs[formName].validate(async (valid) => {
           if (valid) {
             const res = await login(this.ruleForm2)
+            console.log(res)
             if (res.status === 1) {
-              this.isLoged()
-              if (this.isLogin) {
-                this.$router.push('/')
-              }
+              this.$message({
+                type: 'success',
+                message: res.message
+              })
+              this.$router.push('/manage')
+            }else {
+              this.$message({
+                type: 'error',
+                message: res.message
+              })
             }
           } else {
             console.log('error submit!!');
@@ -106,6 +115,9 @@
         });
       },
       resetForm(formName) {
+        this.colors.cl3 = ''
+        this.colors.cl2 = ''
+        this.colors.cl1 = ''
         this.$refs[formName].resetFields();
       },
       changeCaptcha() {

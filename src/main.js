@@ -6,7 +6,7 @@ import store from './store'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
-import IconSvg from './components/Icon-svg'
+import IconSvg from './plugin/Icon-svg'
 Vue.component('icon-svg', IconSvg)
 import './assets/icons/iconfont'
 Vue.config.productionTip = false

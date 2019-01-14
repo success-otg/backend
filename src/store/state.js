@@ -3,7 +3,5 @@ export default {
     avatar: 'default.jpg'
   },
   collapsed: true,
-  isLogin: false,
   imageUrl: '',
-  tiy: ''
 }

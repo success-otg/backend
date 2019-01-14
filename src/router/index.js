@@ -6,12 +6,12 @@ Vue.use(VueRouter)
 const router = new VueRouter({
   routes: [
     {
-      path: '/login',
+      path: '/',
       name: 'login',
       component: () => import(/* webpackChunkName:'login'*/ '../views/login')
     },
     {
-      path: '/',
+      path: '/manage',
       component: () => import(/* webpackChunkName:'layout'*/ '../views/layout'),
       children: [
         {
