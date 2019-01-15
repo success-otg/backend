@@ -36,7 +36,7 @@
       }
     },
     created(){
-      if (!this.adminInfo.id){
+      if (this.adminInfo === {}){
         this.getAdminData()
       }
     },
