@@ -36,7 +36,7 @@
       }
     },
     created(){
-      if (this.adminInfo === {}){
+      if (!this.adminInfo.id){
         this.getAdminData()
       }
     },
@@ -55,7 +55,8 @@
     },
     watch: {
       adminInfo: function(newValue){
-        if (newValue.id){
+        console.log(newValue)
+        if (newValue !== null && newValue.id){
           this.$message({
             type: 'success',
             message: '检测到您之前登录过，将自动登录'

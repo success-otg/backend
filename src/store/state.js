@@ -1,5 +1,7 @@
 export default {
-  adminInfo: {},
+  adminInfo: {
+    avatar: 'default.jpg'
+  },
   collapsed: true,
   imageUrl: '',
 }

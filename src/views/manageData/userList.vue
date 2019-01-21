@@ -10,18 +10,16 @@
         width="50">
       </el-table-column>
       <el-table-column
-        property="date"
-        label="日期"
-        width="120">
+        property="user_name"
+        label="用户名">
       </el-table-column>
       <el-table-column
-        property="name"
-        label="姓名"
-        width="120">
+        property="register_time"
+        label="注册时间">
       </el-table-column>
       <el-table-column
-        property="address"
-        label="地址">
+        property="city"
+        label="城市">
       </el-table-column>
     </el-table>
   </div>
@@ -67,7 +65,7 @@
           res.users.forEach(item=>{
            let tableData = {}
            tableData.user_name = item.username
-            tableData.create_time = item.register_time
+            tableData.register_time = item.register_time
             tableData.city = item.city
             this.tableData.push(tableData)
           })
