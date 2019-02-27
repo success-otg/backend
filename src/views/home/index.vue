@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     home page
-    <button @click="check">check</button>
+    <button @click="getHeight" ref="btn">check</button>
   </div>
 </template>
 
@@ -21,6 +21,9 @@
     },
     methods:{
       check(){
+      },
+      getHeight(){
+        console.log(this.$refs.btn.offsetHeight)
       }
     }
   }

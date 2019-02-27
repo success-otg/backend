@@ -51,6 +51,7 @@
       async getCaptchas(){
         let res = await getCaptchas()
         this.imageUrl = res.code
+        console.log(res)
       }
     },
     watch: {
